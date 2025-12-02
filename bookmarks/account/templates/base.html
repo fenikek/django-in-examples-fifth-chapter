@@ -51,5 +51,51 @@
    {% block content %}
    {% endblock %}
 </div>
+<script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+  const csrftoken = Cookies.get('csrftoken')
+  document.addEventListener('DOMContentLoaded', (event) =>{
+      //DOM загрузка
+      {%block domready%}
+      const url = '{%url "images:like"%}';
+      var options = {
+        method: 'POST',
+        headers: {'X-CSRFToken': csrftoken},
+        credentials: 'same-origin'
+      }
+      document.querySelector('a.like').addEventListener('click', function(e){
+        e.preventDefault();
+        var likeButton = this;
+
+        //add body of request
+        var formData = new FormData();
+        formData.append('id', likeButton.dataset.id);
+        formData.append('action', likeButton.dataset.action);
+        options['body'] = formData;
+
+        // send HTTP-request
+        fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+          if (data['status']==='ok')
+          {
+            var previousAction = likeButton.dataset.action;
+            
+            // переключить текст кнопки и атрибут data-action
+            var action = previousAction === 'like' ? 'unlike' : 'like';
+            likeButton.dataset.action = action;
+            likeButton.innerHTML = action;
+
+            // обновить количество лайков
+            var likeCount = document.querySelector('span.count .total');
+            var totalLikes = parseInt(likeCount.innerHTML);
+            likeCount.innerHTML = previousAction === 'like' ? totalLikes + 1 : totalLikes - 1;
+          }
+        })
+      });
+    {%endblock%}
+  })
+</script>
+
 </body>
 </html>
