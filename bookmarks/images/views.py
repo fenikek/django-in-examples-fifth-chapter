@@ -25,6 +25,11 @@ def image_create(request):
             new_image = form.save(commit=False)
             new_image.user = request.user
             new_image.save()
+            
+            tags = form.cleaned_data.get('tags')
+            if tags:
+                new_image.tags.add(*[t.strip() for t in tags.split(',')])
+                
             create_action(request.user, 'bookmarked image', new_image)
             messages.success(request, 'Image added successfully')
             return redirect(new_image.get_absolute_url())
@@ -37,10 +42,12 @@ def image_detail(request, id, slug):
     image = get_object_or_404(Image, id=id, slug=slug)
     total_views = r.incr(f'image:{image.id}:views')
     r.zincrby('image_ranking', 1, image.id)
+    image_tags = image.tags.all()
     return render(request, 'images/image/detail.html',
                   {'section':'images',
                    'image': image,
-                   'total_views': total_views},)
+                   'total_views': total_views,
+                   'image_tags': image_tags},)
    
 @login_required
 @require_POST   
@@ -95,3 +102,10 @@ def image_ranking(request):
                   'images/image/ranking.html',
                   {'section': 'images',
                    'most_viewed': most_viewed})
+    
+def tagged_images(request, tag_name):
+    images = Image.objects.filter(tags__name__in=[tag_name])
+    return render(request, 'images/image/tag_filter.html',
+                  {'images': images,
+                   'section': 'images',
+                   'tag_name': tag_name})

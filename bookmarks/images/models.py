@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 class Image(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -17,6 +18,8 @@ class Image(models.Model):
                                         related_name='images_liked',
                                         blank=True)
     total_likes = models.PositiveIntegerField(default=0)
+    
+    tags = TaggableManager()
     
     def get_absolute_url(self):
         return reverse("images:detail", args=[self.id, self.slug])
@@ -36,3 +39,4 @@ class Image(models.Model):
     
     def __str__(self):
         return self.title    
+

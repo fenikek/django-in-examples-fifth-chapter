@@ -2,12 +2,18 @@ from django import forms
 from .models import Image
 from django.utils.text import slugify
 from django.core.files.base import ContentFile
+from taggit.forms import TagWidget
 import requests
 
 class ImageCreateForm(forms.ModelForm):
+    tags = forms.CharField(
+        required=False,
+        widget=TagWidget(attrs={'placeholder': 'Input tags separated by commas'})
+    )
+    
     class Meta:
         model = Image
-        fields = ['title','url', 'description']
+        fields = ['title','url', 'description', 'tags']
         widgets = {
             'url': forms.HiddenInput
         }
@@ -30,4 +36,8 @@ class ImageCreateForm(forms.ModelForm):
         image.image.save(image_name, ContentFile(response.content), save=False)
         if commit:
             image.save()
+            tags = self.cleaned_data.get('tags')
+            if tags:
+                image.tags.add(*[t.strip() for t in tags.split(',')])
+                
         return image

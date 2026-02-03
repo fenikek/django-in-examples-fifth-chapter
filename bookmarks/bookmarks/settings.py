@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'actions.apps.ActionsConfig',
     'debug_toolbar',
+    'taggit',
 ]
 
 MIDDLEWARE = [

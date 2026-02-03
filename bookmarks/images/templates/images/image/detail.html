@@ -18,6 +18,7 @@
         <span class="count">
             {{total_views}} view{{total_views|pluralize}}
         </span>
+
         <a href="#" data-id="{{image.id}}" data-action="{%if request.user in users_like%}un{%endif%}like" class="like button">
             {%if request.user not in users_like%}
             Like
@@ -27,6 +28,18 @@
         </a>
     </div> 
     {{image.description|linebreaks}}
+</div>
+<div class="tags">
+    <h3>Tags:</h3>
+    <ul>
+        {% for tag in image_tags%}
+        <li>
+            <a href="{% url 'images:tagged' tag.name %}">{{tag.name}}</a>
+        </li>
+    {%empty%}
+    <li>There are no tags</li>
+    {%endfor%}
+    </ul>
 </div>
 <div class="image-likes">
     {%for user in image.users_like.all%}
