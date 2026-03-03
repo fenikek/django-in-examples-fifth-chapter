@@ -70,7 +70,7 @@ def image_like(request):
 @login_required
 def image_list(request):
     images = Image.objects.all()
-    paginator = Paginator(images, 8)
+    paginator = Paginator(images, 4)
     page = request.GET.get('page')
     images_only = request.GET.get('images_only')
     try:
@@ -105,7 +105,27 @@ def image_ranking(request):
     
 def tagged_images(request, tag_name):
     images = Image.objects.filter(tags__name__in=[tag_name])
-    return render(request, 'images/image/tag_filter.html',
+    # print('hello') 
+    paginator = Paginator(images, 4)
+    page = request.GET.get('page')
+    images_only = request.GET.get('images_only')
+    
+    
+    try:
+        images = paginator.page(page)
+    except PageNotAnInteger:
+        images = paginator.page(1)
+    except EmptyPage:
+        if images_only:
+            return HttpResponse('')
+        images = paginator.page(paginator.num_pages)
+    if images_only:
+        return render(request, 'images/image/tag_filter.html',  
+                      {'images': images,
+                       'section': 'images',
+                       'tag_name': tag_name})
+        
+    return render(request, 'images/image/tag_filter_list.html',  
                   {'images': images,
                    'section': 'images',
                    'tag_name': tag_name})

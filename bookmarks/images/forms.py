@@ -36,8 +36,6 @@ class ImageCreateForm(forms.ModelForm):
         image.image.save(image_name, ContentFile(response.content), save=False)
         if commit:
             image.save()
-            tags = self.cleaned_data.get('tags')
-            if tags:
-                image.tags.add(*[t.strip() for t in tags.split(',')])
+
                 
         return image
