@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'actions.apps.ActionsConfig',
     'taggit',
+    'cloudinary_storage',# for deploy
+    'cloudinary',# for deploy
 ]
 
 if DEBUG:
@@ -194,5 +196,15 @@ REDIS_HOST = _redis.hostname # for deploy
 REDIS_PORT = _redis.port # for deploy
 REDIS_PASSWORD = _redis.password # for deploy
 REDIS_DB = 0 # for deploy
+
+import cloudinary# for deploy
+# for deploy
+CLOUDINARY_STORAGE = {# for deploy
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),# for deploy
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),# for deploy
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),# for deploy
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'# for deploy
 
 CSRF_TRUSTED_ORIGINS = ['https://django-in-examples-fifth-chapter-production.up.railway.app'] # for deploy
