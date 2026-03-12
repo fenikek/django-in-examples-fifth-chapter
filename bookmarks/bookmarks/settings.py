@@ -205,6 +205,12 @@ CLOUDINARY_STORAGE = {# for deploy
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),# for deploy
 }
 
+cloudinary.config(# for deploy
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),# for deploy
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),# for deploy
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),# for deploy
+)# for deploy
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'# for deploy
 
 CSRF_TRUSTED_ORIGINS = ['https://django-in-examples-fifth-chapter-production.up.railway.app'] # for deploy
