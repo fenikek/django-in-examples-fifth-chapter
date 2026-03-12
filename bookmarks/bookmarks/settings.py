@@ -20,6 +20,7 @@ from django.urls import reverse_lazy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+STATIC_ROOT = BASE_DIR / 'staticfiles' # for deploy
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -57,7 +58,7 @@ INSTALLED_APPS = [
 ]
 
 if DEBUG:
-    INSTALLED_APPS += ['debug_toolbar']
+    INSTALLED_APPS += ['debug_toolbar'] # for deploy
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -173,8 +174,8 @@ SOCIAL_AUTH_PIPELINE = [
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = important.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY 
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = important.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET 
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY') # for deploy
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET') # for deploy
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail',args=[u.username])    
@@ -183,3 +184,5 @@ ABSOLUTE_URL_OVERRIDES = {
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
+
+CSRF_TRUSTED_ORIGINS = ['https://django-in-examples-fifth-chapter-production.up.railway.app'] # for deploy
