@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
+
 from pathlib import Path
 
 from secret import important
@@ -168,8 +170,11 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details'
 ]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = important.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY 
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = important.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET 
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = important.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY 
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = important.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET 
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail',args=[u.username])    
