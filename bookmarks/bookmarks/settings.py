@@ -192,6 +192,7 @@ REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379') # for deploy
 _redis = urllib.parse.urlparse(REDIS_URL) # for deploy
 REDIS_HOST = _redis.hostname # for deploy
 REDIS_PORT = _redis.port # for deploy
+REDIS_PASSWORD = _redis.password # for deploy
 REDIS_DB = 0 # for deploy
 
 CSRF_TRUSTED_ORIGINS = ['https://django-in-examples-fifth-chapter-production.up.railway.app'] # for deploy

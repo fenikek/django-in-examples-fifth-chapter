@@ -12,9 +12,14 @@ from .forms import ImageCreateForm
 from actions.utils import create_action
 from django.conf import settings
 
-r = redis.Redis(host=settings.REDIS_HOST,
-                port=settings.REDIS_PORT,
-                db=settings.REDIS_DB)
+# r = redis.Redis(host=settings.REDIS_HOST,
+#                 port=settings.REDIS_PORT,
+#                 db=settings.REDIS_DB)
+
+r = redis.Redis(host=settings.REDIS_HOST,# for deploy
+                port=settings.REDIS_PORT,# for deploy
+                db=settings.REDIS_DB,# for deploy
+                password=settings.REDIS_PASSWORD)  # for deploy
 
 @login_required
 def image_create(request):
