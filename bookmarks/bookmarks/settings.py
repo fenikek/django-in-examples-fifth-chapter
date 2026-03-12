@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',# for deploy
+    'cloudinary',# for deploy
     'django.contrib.staticfiles',
     'social_django',
     'django_extensions',
@@ -55,8 +57,6 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'actions.apps.ActionsConfig',
     'taggit',
-    'cloudinary_storage',# for deploy
-    'cloudinary',# for deploy
 ]
 
 if DEBUG:
