@@ -182,8 +182,14 @@ ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail',args=[u.username])    
 }
 
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-REDIS_DB = 0
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = 6379
+# REDIS_DB = 0
+
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379') # for deploy
+_redis = urllib.parse.urlparse(REDIS_URL) # for deploy
+REDIS_HOST = _redis.hostname # for deploy
+REDIS_PORT = _redis.port # for deploy
+REDIS_DB = 0 # for deploy
 
 CSRF_TRUSTED_ORIGINS = ['https://django-in-examples-fifth-chapter-production.up.railway.app'] # for deploy
