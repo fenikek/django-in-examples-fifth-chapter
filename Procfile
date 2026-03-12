@@ -1,1 +1,1 @@
-web: cd bookmarks && gunicorn bookmarks.wsgi:application --bind 0.0.0.0:$PORT
+web: cd bookmarks && python manage.py collectstatic --noinput && gunicorn bookmarks.wsgi:application --bind 0.0.0.0:$PORT
