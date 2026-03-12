@@ -14,7 +14,7 @@ import os
 
 from pathlib import Path
 
-from secret import important
+# from secret import important
 
 from django.urls import reverse_lazy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
