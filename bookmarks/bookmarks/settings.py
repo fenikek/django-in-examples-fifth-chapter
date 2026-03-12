@@ -186,6 +186,8 @@ ABSOLUTE_URL_OVERRIDES = {
 # REDIS_PORT = 6379
 # REDIS_DB = 0
 
+import urllib.parse
+
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379') # for deploy
 _redis = urllib.parse.urlparse(REDIS_URL) # for deploy
 REDIS_HOST = _redis.hostname # for deploy
