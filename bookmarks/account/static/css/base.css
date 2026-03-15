@@ -196,6 +196,7 @@ ul.messages li a.close {
 
 .image-preview, .image-detail {
     max-width:300px;
+    max-height: 600px;
     float:left;
     margin:0 20px 20px 0;
 }
