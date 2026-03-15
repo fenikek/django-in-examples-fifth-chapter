@@ -107,7 +107,7 @@ def image_ranking(request):
                   'images/image/ranking.html',
                   {'section': 'images',
                    'most_viewed': most_viewed})
-    
+@login_required    
 def tagged_images(request, tag_name):
     images = Image.objects.filter(tags__name__in=[tag_name])
     # print('hello') 
